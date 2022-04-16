@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { signInWithGoogle } from "../../../firebase/firebase.utils";
-import React, { FormEvent } from "react";
+import { auth, signInWithGoogle } from "../../../firebase/firebase.utils";
+import React, { ChangeEvent, FormEvent } from "react";
 import CustomButton from "../custom-button/custom-button.component";
 import FormInput from "../form-input/form-input.component";
 
 import "./sign-in.styles.scss";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 interface UserAuth {
   email: string;
@@ -17,12 +18,21 @@ export class SignIn extends React.Component<any, UserAuth> {
     this.state = { email: "", password: "" };
   }
 
-  handleSubmit = (event: { preventDefault: () => void; }) => {
+  handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    this.setState({ email: "", password: "" });
+
+    const { email, password } = this.state
+
+    try { 
+      await signInWithEmailAndPassword(auth, email, password )
+      this.setState({ email: "", password: "" });
+    } catch (error) {
+      console.error('unable to athenticate user', error)
+    }
+
   };
 
-  handleChange = (event: FormEvent<HTMLInputElement>) => {
+  handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { value, name } = event.currentTarget;
 
     this.setState({ [name]: value } as any);
