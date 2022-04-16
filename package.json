@@ -9,9 +9,12 @@
   },
   "private": true,
   "dependencies": {
+    "@types/react-router-dom": "^5.3.3",
     "core-js": "^3.6.5",
+    "firebase": "^9.6.11",
     "react": "18.0.0",
     "react-dom": "18.0.0",
+    "react-router-dom": "^6.3.0",
     "regenerator-runtime": "0.13.7",
     "tslib": "^2.0.0"
   },
