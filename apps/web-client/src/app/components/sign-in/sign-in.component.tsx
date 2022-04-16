@@ -1,20 +1,18 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { signInWithGoogle } from "../../../firebase/firebase.utils";
-import React, { ChangeEvent } from "react";
+import React, { FormEvent } from "react";
 import CustomButton from "../custom-button/custom-button.component";
 import FormInput from "../form-input/form-input.component";
 
 import "./sign-in.styles.scss";
-
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-interface IProps {}
 
 interface UserAuth {
   email: string;
   password: string;
 }
 
-export class SignIn extends React.Component<IProps, UserAuth> {
-  constructor(props: IProps | Readonly<IProps>) {
+export class SignIn extends React.Component<any, UserAuth> {
+  constructor(props: any) {
     super(props);
     this.state = { email: "", password: "" };
   }
@@ -24,8 +22,8 @@ export class SignIn extends React.Component<IProps, UserAuth> {
     this.setState({ email: "", password: "" });
   };
 
-  handleChange = (event: ChangeEvent) => {
-    const { value, name } = event.target as any;
+  handleChange = (event: FormEvent<HTMLInputElement>) => {
+    const { value, name } = event.currentTarget;
 
     this.setState({ [name]: value } as any);
   };

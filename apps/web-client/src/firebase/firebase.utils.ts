@@ -21,6 +21,7 @@ const provider = new GoogleAuthProvider()
 provider.setCustomParameters({ prompt: "select_account" })
 export const signInWithGoogle = () => signInWithPopup(auth, provider)
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const createUserProfileDocument = async (userAuth: User , additionalData?: any) => {
     console.log(userAuth)
     if(!userAuth) return undefined

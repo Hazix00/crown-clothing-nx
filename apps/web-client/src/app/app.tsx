@@ -12,7 +12,7 @@ import { User } from 'firebase/auth';
 import { auth, createUserProfileDocument } from '../firebase/firebase.utils';
 
 export interface AppUser {
-  currentUser: string | null;
+  currentUser?: string | null;
   displayName?: string;
   email?: string;
   createdAt?: Date
@@ -47,7 +47,7 @@ class App extends React.Component<unknown, AppUser> {
               console.log('onAuthStateChanged data', userSnap.data())
               this.setState({
                 currentUser: userSnap.id,
-                ...userSnap.data() as any
+                ...userSnap.data() as AppUser
               })
             },
             error: (error) => {
