@@ -1,20 +1,17 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
 
 import SHOP_DATA from './shop.data'
 import CollectionPreview from '../../components/collection-preview/collectionpreview.component';
 import { ProductsCollection } from '../../models/productsCollection.model';
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-interface IProps {
-}
-
 interface IState {
   collections?: ProductsCollection[];
 }
 
-class ShopPage extends React.Component<IProps, IState> {
+class ShopPage extends React.Component<any, IState> {
 
-  constructor(props: IProps | Readonly<IProps>) {
+  constructor(props: any) {
     super(props);
     this.state = {
       collections: SHOP_DATA

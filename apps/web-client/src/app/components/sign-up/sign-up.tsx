@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { auth, createUserProfileDocument } from 'apps/web-client/src/firebase/firebase.utils';
+import { auth, createUserProfileDocument } from '../../../firebase/firebase.utils';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import React, { ChangeEvent, FormEvent, SyntheticEvent, useRef, useState } from 'react';
+import React, { ChangeEvent, FormEvent, useState } from 'react';
 import CustomButton from '../custom-button/custom-button.component';
 import FormInput from '../form-input/form-input.component';
 import styles from './sign-up.module.scss';
