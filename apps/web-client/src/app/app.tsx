@@ -3,13 +3,15 @@ import './app.module.scss';
 
 
 import Header from './components/header/header.component';
-import HomePage from './pages/home/homepage.component';
-import ShopPage from './pages/shop/shoppage.component';
-import SignInAndUpPage from './pages/sign-in-and-up/signinanduppage.component';
-import React from 'react';
+import HomePage from './pages/home/home.page';
+import ShopPage from './pages/shop/shop.page';
+import SignInAndUpPage from './pages/sign-in-and-up/sign-in-and-up.page';
+import React, { FC, useEffect } from 'react';
 import { onSnapshot } from 'firebase/firestore';
-import { User } from 'firebase/auth';
 import { auth, createUserProfileDocument } from '../firebase/firebase.utils';
+import { useDispatch, useSelector } from 'react-redux';
+import { isUserAuthenticatedSelector } from './store/slices/user/auth/auth.selectors';
+import { login, logout } from './store/slices/user/auth/auth.slice';
 
 export interface AppUser {
   currentUser?: string | null;
@@ -18,70 +20,62 @@ export interface AppUser {
   createdAt?: Date
 }
 
-class App extends React.Component<unknown, AppUser> {
+export const App: FC = () => {
 
-  constructor(props: unknown) {
-    super(props);
+  const authenticated = useSelector(isUserAuthenticatedSelector);
+  const dispatch = useDispatch();
 
-    this.state = {
-      currentUser: null
-    };
-  }
+  const refresh = React.useCallback(
+    async (displayName, email) => {
+      const userData = {
+        displayName,
+        email,
+      };
+      return dispatch(login(userData));
+    },
+    [dispatch]
+  );
 
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  unsubscribeFromAuth: Function | null = null;
+  useEffect(() => {
+    const f = async () => {
+      auth.onAuthStateChanged(async user => {
+        if (user && !authenticated) {
+          const userRef = await createUserProfileDocument(user)
 
-  override componentDidMount() {
-    this.unsubscribeFromAuth = auth.onAuthStateChanged(
-      async (userAuth: User | null) => {
-      // this.setState({ currentUser: user });
-      if(userAuth) {
-
-        const userRef = await createUserProfileDocument(userAuth)
-
-        if(userRef) {
-
-          onSnapshot(userRef, {
-            next: (userSnap) => {
-              console.log('onAuthStateChanged id', userSnap.id)
-              console.log('onAuthStateChanged data', userSnap.data())
-              this.setState({
-                currentUser: userSnap.id,
-                ...userSnap.data() as AppUser
-              })
-            },
-            error: (error) => {
-              console.error('Canot login the user', error)
-            }
-          });
+          if(userRef) {
+            onSnapshot(userRef, {
+              next: async (userSnap) => {
+                console.log('onAuthStateChanged id', userSnap.id)
+                console.log('onAuthStateChanged data', userSnap.data())
+                return await refresh(user.displayName, user.email);
+              },
+              error: (error) => {
+                console.error('Canot login the user', error)
+              }
+            });
+          }
+          
         }
-
-      }
-      else {
-        this.setState({currentUser: null})
-      }
-    })
-  }
-
-  override componentWillUnmount() {
-    if(this.unsubscribeFromAuth) {
-      this.unsubscribeFromAuth();
-    }
-  }
-
-  override render() {
+        if (!user && !authenticated) {
+          dispatch(logout());
+        }
+      });
+      // await auth.setPersistence(auth..Auth.Persistence.SESSION);
+    };
+    f();
+  });
 
     return (
-      <div>
-        <Header currentUser={this.state.currentUser}/>
+      <>
+        <Header/>
         <Routes>
           <Route path="/" element={<HomePage/>}/>
           <Route path="/shop" element={<ShopPage/>}/>
           <Route path="/signin" element={<SignInAndUpPage/>}/>
         </Routes>
-      </div>
+      </>
     );
   }
-}
 
-export default App;
+
+

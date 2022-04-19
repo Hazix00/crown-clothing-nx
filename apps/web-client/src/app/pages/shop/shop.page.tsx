@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
 
+import './shop.styles.scss'
+
 import SHOP_DATA from './shop.data'
 import CollectionPreview from '../../components/collection-preview/collectionpreview.component';
 import { ProductsCollection } from '../../models/productsCollection.model';

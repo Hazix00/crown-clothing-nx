@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { auth, createUserProfileDocument } from '../../../firebase/firebase.utils';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import React, { ChangeEvent, FormEvent, useState } from 'react';
+import React, { ChangeEvent, FC, FormEvent, useState } from 'react';
 import CustomButton from '../custom-button/custom-button.component';
 import FormInput from '../form-input/form-input.component';
 import styles from './sign-up.module.scss';
@@ -13,7 +13,7 @@ interface SignUpData {
   confirmPassword: string
 }
 
-export function SignUp() {
+export const SignUp:FC = () => {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const initialState = {
@@ -22,10 +22,7 @@ export function SignUp() {
     password: '',
     confirmPassword: ''
   }
-  // const [displayName, setdisplayName] = useState<string>('');
-  // const [email, setemail] = useState<string>('');
-  // const [password, setpassword] = useState<string>('');
-  // const [confirmPassword, setconfirmPassword] = useState<string>('');
+
   const [signUpData, setSignUpData ] = useState<SignUpData>(initialState);
 
   const handleChange = async (event: ChangeEvent<HTMLInputElement>) => {
@@ -38,7 +35,7 @@ export function SignUp() {
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log('signIn', event)
+    console.log('signUn', event)
     if(signUpData.password !== signUpData.confirmPassword) {
       alert('Passwords do not match')
       return
