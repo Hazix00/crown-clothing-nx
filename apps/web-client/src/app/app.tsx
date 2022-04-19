@@ -69,7 +69,7 @@ export const App: FC = () => {
       <>
         <Header/>
         <Routes>
-          <Route path="/" element={<HomePage/>}/>
+          <Route  path="/" element={<HomePage/>}/>
           <Route path="/shop" element={<ShopPage/>}/>
           <Route path="/signin" element={<SignInAndUpPage/>}/>
         </Routes>
