@@ -13,7 +13,7 @@ const SignInAndUpPage = () => {
     const authenticated = useSelector(isUserAuthenticatedSelector)
 
     if(authenticated === true) {
-        return <Navigate to="/" />
+        return <Navigate to="/" replace/>
     }
 
     return (

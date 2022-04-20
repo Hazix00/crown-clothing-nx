@@ -21,6 +21,6 @@ export const isUserAuthenticatedSelector = createSelector(
   }
 );
 
-export const errorSelector = createSelector(authSelector, auth => {
+export const authErrorSelector = createSelector(authSelector, auth => {
   return auth.error;
 });

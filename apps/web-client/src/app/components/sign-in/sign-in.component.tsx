@@ -4,8 +4,9 @@ import CustomButton from '../custom-button/custom-button.component';
 import FormInput from '../form-input/form-input.component';
 
 import './sign-in.styles.scss';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../../store/slices/user/auth/auth.slice';
+import { authErrorSelector } from '../../store/slices/user/auth/auth.selectors';
 
 interface SignInData {
   email?: string | undefined;
@@ -21,11 +22,14 @@ export const SignIn: FC = () => {
 
   const [signInData, setSignInData] = useState<SignInData>(initialState);
 
+  const authError = useSelector(authErrorSelector)
+
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     try {
       await dispatch(login({ ...signInData, logInType: 'email' }));
+      if(authError) return
       setSignInData(initialState);
     
     } catch (error) {
@@ -62,9 +66,12 @@ export const SignIn: FC = () => {
           handleChange={handleChange}
           required
         />
+         <div>
+          <strong className='error-message'>{authError?.message}</strong>
+        </div>
         <div className="buttons">
           <CustomButton type="submit">Sign In</CustomButton>
-          <CustomButton onClick={() => dispatch(login({logInType: 'google'}))} isGoogleSignIn>
+          <CustomButton type="button" onClick={() => dispatch(login({logInType: 'google'}))} isGoogleSignIn>
             Sign In with Google
           </CustomButton>
         </div>

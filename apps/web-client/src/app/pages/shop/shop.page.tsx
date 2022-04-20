@@ -4,7 +4,7 @@ import React from 'react';
 import './shop.styles.scss'
 
 import SHOP_DATA from './shop.data'
-import CollectionPreview from '../../components/collection-preview/collectionpreview.component';
+import CollectionPreview from '../../components/collection/collection-preview/collectionpreview.component';
 import { ProductsCollection } from '../../models/productsCollection.model';
 
 interface IState {
