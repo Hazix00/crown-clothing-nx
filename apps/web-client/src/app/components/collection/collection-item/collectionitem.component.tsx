@@ -1,6 +1,6 @@
 
 import React, { FC } from 'react'
-import { Product } from '../../models/product.model';
+import { Product } from '../../../models/product.model';
 
 import './collectionitem.styles.scss';
 

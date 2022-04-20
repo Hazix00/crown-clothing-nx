@@ -3,7 +3,7 @@ import React, { FC } from 'react';
 import './collectionpreview.styles.scss';
 
 import CollectionItem from '../collection-item/collectionitem.component';
-import { Product } from '../../models/product.model';
+import { Product } from '../../../models/product.model';
 
 const CollectionPreview: FC<{title: string, items: Product[]}> =  ({title, items}) => (
     <div className="collection-preview">
