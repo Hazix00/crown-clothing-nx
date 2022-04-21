@@ -7,6 +7,7 @@ import './sign-in.styles.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../../store/slices/user/auth/auth.slice';
 import { authErrorSelector } from '../../store/slices/user/auth/auth.selectors';
+import GoogleButton from 'react-google-button';
 
 interface SignInData {
   email?: string | undefined;
@@ -71,9 +72,7 @@ export const SignIn: FC = () => {
         </div>
         <div className="buttons">
           <CustomButton type="submit">Sign In</CustomButton>
-          <CustomButton type="button" onClick={() => dispatch(login({logInType: 'google'}))} isGoogleSignIn>
-            Sign In with Google
-          </CustomButton>
+          <GoogleButton onClick={() => dispatch(login({logInType: 'google'}))}/>
         </div>
       </form>
     </div>

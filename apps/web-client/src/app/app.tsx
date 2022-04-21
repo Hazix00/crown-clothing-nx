@@ -26,12 +26,9 @@ export const App: FC = () => {
   const dispatch = useDispatch();
 
   const refresh = React.useCallback(
-    async (displayName, email) => {
-      const userData = {
-        displayName,
-        email,
-      };
-      return dispatch(login(userData));
+    async ({displayName, email}) => {
+      console.log('refresh', displayName, email);
+      return dispatch(login({displayName, email}));
     },
     [dispatch]
   );
@@ -47,7 +44,7 @@ export const App: FC = () => {
               next: async (userSnap) => {
                 console.log('onAuthStateChanged id', userSnap.id)
                 console.log('onAuthStateChanged data', userSnap.data())
-                return await refresh(user.displayName, user.email);
+                return await refresh(userSnap.data());
               },
               error: (error) => {
                 console.error('Canot login the user', error)

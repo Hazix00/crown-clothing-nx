@@ -43,10 +43,11 @@ export const login = createAsyncThunk<AuthState, LoginPayLoad>(
                         response = await signInWithEmailAndPassword(auth, req.email as string, req.password as string);
                         break;
                 }
+                console.log('login request',req);
                 console.log('login response',response);
 
                 if (response) {
-                    const { displayName, email } = response.user;
+                    const { displayName, email } = req;
                     return {
                         displayName,
                         email
@@ -58,8 +59,8 @@ export const login = createAsyncThunk<AuthState, LoginPayLoad>(
                 
                 
             } else {
-                const displayName = req.displayName;
-                const email = req.email;
+                console.log('login request no type',req);
+                const { displayName, email } = req;
                 return { displayName, email };
             }
         } catch (error: any) {

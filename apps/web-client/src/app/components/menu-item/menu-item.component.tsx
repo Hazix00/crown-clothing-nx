@@ -24,6 +24,4 @@ const MenuItem: FC<any> = ({title, imageUrl, size, linkUrl}) => {
 
 }
 
-
-
 export default MenuItem;
